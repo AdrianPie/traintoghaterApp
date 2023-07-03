@@ -60,18 +60,19 @@ class FirestoreDatabaseViewModel() : ViewModel() {
         image: Int? = null,
         member: String? = null,
         name: String,
+        presence: Int? = null,
         nextExercise: ExerciseList? = null,
         password: String? = null,
         readyList: ArrayList<Boolean>? = null
     ) {
         viewModelScope.launch(Dispatchers.IO) {
-            val isRegistered = firestore.updateGroup(image, member, name, nextExercise, password,readyList)
+            val isRegistered = firestore.updateGroup(image, member, name,presence, nextExercise, password,readyList)
             _Success.postValue(isRegistered)
         }
     }
-    fun updateUserInfo(image: Int? = null, haveGroup: Boolean? = null, group: String? = null) {
+    fun updateUserInfo(image: Int? = null, presence: Int = 0, haveGroup: Boolean? = null, group: String? = null) {
         viewModelScope.launch(Dispatchers.IO) {
-            val isChanged = firestore.updateUserInfo(image, haveGroup, group)
+            val isChanged = firestore.updateUserInfo(image, presence, haveGroup, group)
             _Success.postValue(isChanged)
         }
     }

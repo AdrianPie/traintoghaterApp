@@ -25,6 +25,7 @@ import com.example.newmainproject.ui.viewmodel.FirestoreDatabaseViewModel
 import com.example.newmainproject.ui.viewmodel.GroupSingletonViewModel
 import com.example.newmainproject.ui.viewmodel.UserSingletonViewModel
 import com.example.newmainproject.utils.Constants
+import com.example.newmainproject.utils.TimerHome
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -38,7 +39,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val groupSingletonViewModel by viewModels<GroupSingletonViewModel>()
     private val userSingletonViewModel by viewModels<UserSingletonViewModel>()
     private lateinit var adapterx: GroupMembersHomeAdapter
-    private var updateTimerRunnable: Runnable? = null
+    private lateinit var timer: TimerHome
+
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,22 +48,21 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding = FragmentHomeBinding.bind(view)
         var readyListTwo = ArrayList<Boolean>()
         var users = ArrayList<User>()
-        var rv = binding.rvMemberCheckList
-
-        val navController = Navigation.findNavController(requireView())
-
-
-        firestoreDatabaseViewModel.addGroupSnapshotListener("test69") {
-            upadtedGroup ->
-            Log.d("callback1", "onViewCreated: ${upadtedGroup.readyListL[0]}")
+        val rv = binding.rvMemberCheckList
+        val group = groupSingletonViewModel.getGroup()
+        if (group!= null) {
+            firestoreDatabaseViewModel.addGroupSnapshotListener(group.name) {
+                    updatedGroup ->
+            }
         }
+
+
         firestoreDatabaseViewModel.SuccessGetListenerGroup.observe(viewLifecycleOwner) { group ->
             groupSingletonViewModel.updateGroup(group)
             readyListTwo = group.readyListL
-            Log.d("callback2", "onViewCreated: ${readyListTwo[0]}")
+
 
             if (::adapterx.isInitialized) {
-                Log.d("callback3", "onViewCreated: ${readyListTwo[0]}")
                 adapterx = GroupMembersHomeAdapter(users, readyListTwo)
                 rv.adapter = adapterx
                 rv.layoutManager =
@@ -93,47 +94,21 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         firestoreDatabaseViewModel.SuccessGetGroup.observe(viewLifecycleOwner) {
             group ->
             if (group.nextExercise != null) {
+
                 val dateString = group.nextExercise!!.date
                 val dateFormat = SimpleDateFormat("HH:mm - dd/MM/yyyy", Locale.getDefault())
                 val targetDate = dateFormat.parse(dateString)
                 binding.nextSessionTv.text = "NEXT SESSION : $dateString"
                 groupSingletonViewModel.fetchGroup(group)
-
                 firestoreDatabaseViewModel.getAllMembers(group.members)
 
-                val handler = Handler()
                 val delayInMillis = 1000L
+                val currentTime = Date()
+                val timeDifferenceMillis = targetDate.time - currentTime.time
+                timer = TimerHome(timeDifferenceMillis, delayInMillis)
+                setTimerListener(timer)
+                timer.startTimer()
 
-                updateTimerRunnable = object : Runnable {
-                    override fun run() {
-                        val currentTime = Date()
-                        val timeDifferenceMillis = targetDate.time - currentTime.time
-
-                        val hours = TimeUnit.MILLISECONDS.toHours(timeDifferenceMillis)
-                        val minutes = TimeUnit.MILLISECONDS.toMinutes(timeDifferenceMillis) % 60
-                        val seconds = TimeUnit.MILLISECONDS.toSeconds(timeDifferenceMillis) % 60
-                        val secondsToGo = TimeUnit.MILLISECONDS.toSeconds(timeDifferenceMillis)
-                        val remainingTime = String.format("%02d:%02d:%02d", hours, minutes, seconds)
-                        binding.timeToNextSession.text = remainingTime
-                        if (secondsToGo < 300) {
-                            binding.buttonJoin.visibility = View.VISIBLE
-                        }
-                        if (secondsToGo <= 1) {
-                            handler.removeCallbacks(updateTimerRunnable!!)
-                            navController.currentDestination?.id?.let { destinationId ->
-                                if (destinationId == R.id.homeFragment) {
-                                    navController.navigate(R.id.action_homeFragment_to_exerciseFragment)
-                                }
-                            }
-
-                        }
-
-                        handler.postDelayed(this, delayInMillis)
-                    }
-                }
-
-
-                handler.postDelayed(updateTimerRunnable!!, delayInMillis)
             }
 
 
@@ -150,5 +125,28 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
     }
+ private fun setTimerListener(timer: TimerHome){
+     timer.setTimerListener(object : TimerHome.TimerListener {
+         override fun onTimerTick(remainingTime: Long) {
+             val hours = TimeUnit.MILLISECONDS.toHours(remainingTime)
+             val minutes = TimeUnit.MILLISECONDS.toMinutes(remainingTime) % 60
+             val seconds = TimeUnit.MILLISECONDS.toSeconds(remainingTime) % 60
+
+             val Time = String.format("%02d:%02d:%02d", hours, minutes, seconds)
+             binding.timeToNextSession.text = Time
+             if (remainingTime < 300000) {
+                 binding.buttonJoin.visibility = View.VISIBLE
+             }
+         }
+         override fun onTimerFinish() {
+             val group = groupSingletonViewModel.getGroup()
+             val user = userSingletonViewModel.getUser()
+             firestoreDatabaseViewModel.updateUserInfo(presence =  (user!!.presence + 1))
+             Log.d("grupa", "onTimerFinish: ${group!!.presence}  ${group.name}")
+             firestoreDatabaseViewModel.updateGroup(name = group!!.name, presence = (group.presence + 1))
+             Navigation.findNavController(view!!).navigate(R.id.action_homeFragment_to_exerciseFragment)
+         }
+     })
+ }
 
 }

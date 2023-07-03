@@ -7,6 +7,7 @@ import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -14,6 +15,7 @@ import com.example.newmainproject.R
 import com.example.newmainproject.data.singleton.UserSingleton
 import com.example.newmainproject.ui.viewmodel.AuthViewModel
 import com.example.newmainproject.ui.viewmodel.FirestoreDatabaseViewModel
+import com.example.newmainproject.ui.viewmodel.GroupSingletonViewModel
 import com.example.newmainproject.utils.Constants
 
 import com.example.newmainproject.utils.DataTransferListener
@@ -27,8 +29,8 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
     private lateinit var authViewModel: AuthViewModel
     private lateinit var dbViewModel: FirestoreDatabaseViewModel
     private lateinit var dataTransferListener: DataTransferListener
-    private var haveGroup: Boolean = false
-    private var signedIn: Boolean = false
+    private val groupSingletonViewModel by viewModels<GroupSingletonViewModel>()
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -38,20 +40,28 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
         authViewModel.checkIfUserIsSignedIn()
 
-
+        dbViewModel.SuccessGetGroup.observe(viewLifecycleOwner) {
+            group ->
+            groupSingletonViewModel.fetchGroup(group)
+        }
+        dbViewModel.userInfo.observe(viewLifecycleOwner) {
+            user -> dbViewModel.getGroup(user.group)
+        }
         authViewModel.Success.observe(viewLifecycleOwner) { isSignedIn ->
             if (isSignedIn) {
                 authViewModel.storeUserId()
+                dbViewModel.getUserInfo()
+
                 Handler(Looper.getMainLooper()).postDelayed({
                         navController.navigate(R.id.action_splashFragment_to_homeFragment)
                         val showBottomNavigation = true
                         dataTransferListener.onDataTransfer(showBottomNavigation)
-                    }, 2000)
+                    }, 3000)
 
             } else {
                 Handler(Looper.getMainLooper()).postDelayed({
                     navController.navigate(R.id.action_splashFragment_to_signInFragment)
-                }, 2000)
+                }, 3000)
             }
         }
     }

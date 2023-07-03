@@ -102,6 +102,7 @@ class FirestoreDatabaseRepository {
         image: Int? = null,
         member: String? = null,
         name: String,
+        presence: Int? = null,
         nextExercise: ExerciseList? = null,
         password: String? = null,
         readyList: ArrayList<Boolean>? = null): Boolean {
@@ -110,6 +111,9 @@ class FirestoreDatabaseRepository {
                 .document(name)
                 .get().await()
             var group = doc.toObject(Group::class.java)
+            if (presence != null) {
+                group!!.presence = presence
+            }
             if (readyList != null) {
                 group!!.readyListL = readyList
             }
@@ -134,7 +138,7 @@ class FirestoreDatabaseRepository {
             false
         }
     }
-    suspend fun updateUserInfo(image: Int? = null, haveGroup: Boolean? = null, group: String? = null): Boolean {
+    suspend fun updateUserInfo(image: Int? = null, presence: Int? = null, haveGroup: Boolean? = null, group: String? = null): Boolean {
         return try {
             val doc = firestore.collection(Constants.USERS)
                 .document(Constants.CURRENT_USER_ID)
@@ -142,6 +146,9 @@ class FirestoreDatabaseRepository {
             val user = doc.toObject(User::class.java)
             if (image != null) {
                 user!!.image = image
+            }
+            if (presence != null) {
+                user!!.presence = presence
             }
             if (group!= null){
                 user!!.group = group
@@ -154,7 +161,6 @@ class FirestoreDatabaseRepository {
                     .document(Constants.CURRENT_USER_ID)
                     .set(user).await()
             }
-
             true
         } catch (e: Exception) {
             false
