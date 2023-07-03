@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragments.ExerciseFragment" >
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        app:cardCornerRadius="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/progress_bar_exercise"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_exercise_main_gif"
+                android:layout_width="match_parent"
+
+                android:layout_height="300dp"
+                tools:src="@drawable/add_photo_24" />
+
+            <TextView
+                android:id="@+id/tv_exercise_name_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:text="Exercise name"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/reps_exercise_main_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="reps: 10" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <com.owl93.dpb.CircularProgressView
+        android:id="@+id/progress_bar_exercise"
+        android:layout_width="194dp"
+        android:layout_height="177dp"
+        app:strokeGradientStyle="radial"
+        app:gradientStartColor="@color/blue"
+        app:gradientEndColor="@color/purple_200"
+        android:layout_marginBottom="44dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:maxValue="20"
+
+        app:trackColor="@color/black"
+        app:textColor="@color/black"
+        app:text="5"
+        app:progress="0"
+        app:strokeWidth="25dp" />
+
+    <TextView
+        android:id="@+id/time_whole_exercise_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="time"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/progress_bar_exercise"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

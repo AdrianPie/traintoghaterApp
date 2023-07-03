@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "960496189883",
+    "project_id": "thebestonexml",
+    "storage_bucket": "thebestonexml.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:960496189883:android:7c68b9d5298ee9df24c49e",
+        "android_client_info": {
+          "package_name": "com.example.newmainproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "960496189883-9ii3aqfo5icv4enu4g5s45p2tstj75sh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAV3blkDx-D_3a2rXjlej7CnGqTCmXDaxQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "960496189883-9ii3aqfo5icv4enu4g5s45p2tstj75sh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

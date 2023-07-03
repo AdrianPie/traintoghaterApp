@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragments.HomeFragment">
+    <CalendarView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        />
+    <androidx.cardview.widget.CardView
+        android:layout_margin="16dp"
+        app:cardCornerRadius="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/next_session_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="NEXT SESSION :"
+                android:padding="10dp"
+                android:gravity="center"/>
+            <TextView
+                android:id="@+id/time_to_next_session"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TIME TO SESSION"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:textSize="20sp"
+                android:gravity="center"
+                />
+            <TextView
+                android:id="@+id/testy"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="TESTY"
+                />
+            <Button
+                android:visibility="gone"
+                android:id="@+id/button_join"
+                android:layout_width="match_parent"
+                android:layout_marginEnd="50dp"
+                android:layout_marginStart="50dp"
+                android:layout_height="wrap_content"
+                android:text="JOIN"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_member_check_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

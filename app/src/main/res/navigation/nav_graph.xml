@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashFragment">
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.newmainproject.ui.fragments.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_exerciseFragment"
+            app:destination="@id/exerciseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/groupFragment2"
+        android:name="com.example.newmainproject.ui.fragments.GroupFragment"
+        android:label="fragment_group"
+        tools:layout="@layout/fragment_group" >
+        <action
+            android:id="@+id/action_groupFragment2_to_joinGroupFragment2"
+            app:destination="@id/joinGroupFragment2" />
+        <action
+            android:id="@+id/action_groupFragment2_to_createGroupFragment"
+            app:destination="@id/createGroupFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profilFragment2"
+        android:name="com.example.newmainproject.ui.fragments.ProfileFragment"
+        android:label="fragment_profil"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.newmainproject.ui.fragments.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_splashFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.example.newmainproject.ui.fragments.SignInFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in" >
+        <action
+            android:id="@+id/action_signInFragment_to_singUpFragment"
+            app:destination="@id/singUpFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/singUpFragment"
+        android:name="com.example.newmainproject.ui.fragments.SingUpFragment"
+        android:label="fragment_sing_up"
+        tools:layout="@layout/fragment_sing_up" >
+        <action
+            android:id="@+id/action_singUpFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_singUpFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/exercisesFragment2"
+        android:name="com.example.newmainproject.ui.fragments.ExercisesFragment"
+        android:label="ExercisesFragment"
+        tools:layout="@layout/fragment_exercises">
+        <action
+            android:id="@+id/action_exercisesFragment2_to_createExerciseFragment"
+            app:destination="@id/createExerciseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createGroupFragment"
+        android:name="com.example.newmainproject.ui.fragments.CreateGroupFragment"
+        android:label="fragment_create_group"
+        tools:layout="@layout/fragment_create_group" >
+        <action
+            android:id="@+id/action_createGroupFragment_to_groupFragment2"
+            app:destination="@id/groupFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/joinGroupFragment2"
+        android:name="com.example.newmainproject.ui.fragments.JoinGroupFragment"
+        android:label="fragment_join_group"
+        tools:layout="@layout/fragment_join_group" >
+        <action
+            android:id="@+id/action_joinGroupFragment2_to_groupFragment2"
+            app:destination="@id/groupFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/exerciseFragment"
+        android:name="com.example.newmainproject.ui.fragments.ExerciseFragment"
+        android:label="fragment_exercise"
+        tools:layout="@layout/fragment_exercise" />
+    <fragment
+        android:id="@+id/createExerciseFragment"
+        android:name="com.example.newmainproject.ui.fragments.CreateExerciseFragment"
+        android:label="fragment_create_exercise"
+        tools:layout="@layout/fragment_create_exercise" >
+
+        <action
+            android:id="@+id/action_createExerciseFragment_to_exercisesFragment2"
+            app:destination="@id/exercisesFragment2" />
+    </fragment>
+</navigation>
