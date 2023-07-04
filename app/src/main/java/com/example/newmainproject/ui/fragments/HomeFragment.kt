@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -40,14 +41,16 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val userSingletonViewModel by viewModels<UserSingletonViewModel>()
     private lateinit var adapterx: GroupMembersHomeAdapter
     private lateinit var timer: TimerHome
+    private lateinit var navController: NavController
 
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
-        var readyListTwo = ArrayList<Boolean>()
+        var readyListTwo: ArrayList<Boolean>
         var users = ArrayList<User>()
+        navController = Navigation.findNavController(view)
         val rv = binding.rvMemberCheckList
         val group = groupSingletonViewModel.getGroup()
         if (group!= null) {
@@ -74,6 +77,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
 
         binding.buttonJoin.setOnClickListener {
+
             binding.buttonJoin.text = "WAITING FOR OTHER MEMBERS"
             val readyList = groupSingletonViewModel.getGroup()!!.readyListL
             val ready = groupSingletonViewModel.getGroup()!!.members.indexOf(Constants.CURRENT_USER_ID)
@@ -93,7 +97,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
         firestoreDatabaseViewModel.SuccessGetGroup.observe(viewLifecycleOwner) {
             group ->
-            if (group.nextExercise != null) {
+            if (group.nextExercise != null && group.nextExercise!!.date.isNotBlank()) {
 
                 val dateString = group.nextExercise!!.date
                 val dateFormat = SimpleDateFormat("HH:mm - dd/MM/yyyy", Locale.getDefault())
@@ -139,14 +143,16 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
              }
          }
          override fun onTimerFinish() {
+             navigate()
              val group = groupSingletonViewModel.getGroup()
              val user = userSingletonViewModel.getUser()
              firestoreDatabaseViewModel.updateUserInfo(presence =  (user!!.presence + 1))
-             Log.d("grupa", "onTimerFinish: ${group!!.presence}  ${group.name}")
              firestoreDatabaseViewModel.updateGroup(name = group!!.name, presence = (group.presence + 1))
-             Navigation.findNavController(view!!).navigate(R.id.action_homeFragment_to_exerciseFragment)
          }
      })
+ }
+ private fun navigate() {
+     navController.navigate(R.id.action_homeFragment_to_exerciseFragment)
  }
 
 }

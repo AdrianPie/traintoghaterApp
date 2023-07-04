@@ -9,9 +9,13 @@
         android:name="com.example.newmainproject.ui.fragments.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
+
         <action
             android:id="@+id/action_homeFragment_to_exerciseFragment"
             app:destination="@id/exerciseFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_scoreFragment"
+            app:destination="@id/scoreFragment" />
     </fragment>
     <fragment
         android:id="@+id/groupFragment2"
@@ -97,7 +101,11 @@
         android:id="@+id/exerciseFragment"
         android:name="com.example.newmainproject.ui.fragments.ExerciseFragment"
         android:label="fragment_exercise"
-        tools:layout="@layout/fragment_exercise" />
+        tools:layout="@layout/fragment_exercise" >
+        <action
+            android:id="@+id/action_exerciseFragment_to_scoreFragment"
+            app:destination="@id/scoreFragment" />
+    </fragment>
     <fragment
         android:id="@+id/createExerciseFragment"
         android:name="com.example.newmainproject.ui.fragments.CreateExerciseFragment"
@@ -107,5 +115,15 @@
         <action
             android:id="@+id/action_createExerciseFragment_to_exercisesFragment2"
             app:destination="@id/exercisesFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/scoreFragment"
+        android:name="com.example.newmainproject.ui.fragments.ScoreFragment"
+        android:label="fragment_score"
+        tools:layout="@layout/fragment_score" >
+
+        <action
+            android:id="@+id/action_scoreFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 </navigation>

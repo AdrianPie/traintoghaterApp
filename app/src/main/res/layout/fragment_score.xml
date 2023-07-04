@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.fragments.ScoreFragment">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:layout_margin="30dp"
+        android:src="@drawable/trophy"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CONGRATULATION!"
+        android:padding="10dp"
+        android:gravity="center"
+        android:textSize="35sp"
+        android:textStyle="italic|bold"
+        />
+    <TextView
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="You have finished your workout,\n and you are rewarded with"
+        />
+    <TextView
+        android:padding="10dp"
+        android:text="+15 gold"
+        android:gravity="center"
+        android:id="@+id/gold_earned"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        />
+    <androidx.cardview.widget.CardView
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        >
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:src="@drawable/gold"
+            />
+    </androidx.cardview.widget.CardView>
+    <Button
+        android:id="@+id/button_claim_reward"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="claim reward!"
+        />
+
+
+
+
+</LinearLayout>

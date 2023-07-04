@@ -38,7 +38,8 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:text="Exercise name"
-                android:textSize="20dp" />
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/reps_exercise_main_tv"
@@ -53,21 +54,21 @@
         android:id="@+id/progress_bar_exercise"
         android:layout_width="194dp"
         android:layout_height="177dp"
-        app:strokeGradientStyle="radial"
-        app:gradientStartColor="@color/blue"
-        app:gradientEndColor="@color/purple_200"
-        android:layout_marginBottom="44dp"
+        android:layout_marginBottom="36dp"
+        app:gradientEndColor="@color/light_gray"
+        app:gradientStartColor="@color/timber_wolf"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:maxValue="20"
-
-        app:trackColor="@color/black"
-        app:textColor="@color/black"
-        app:text="5"
         app:progress="0"
-        app:strokeWidth="25dp" />
+
+        app:strokeGradientStyle="radial"
+        app:strokeWidth="25dp"
+        app:text="5"
+        app:textColor="@color/black"
+        app:trackColor="@color/black" />
 
     <TextView
         android:id="@+id/time_whole_exercise_tv"
@@ -76,7 +77,9 @@
         android:text="time"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/progress_bar_exercise"
+        app:layout_constraintHorizontal_bias="0.562"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+        app:layout_constraintTop_toBottomOf="@+id/cardView"
+        app:layout_constraintVertical_bias="0.226" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

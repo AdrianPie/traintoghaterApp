@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,9 +17,14 @@ import com.example.newmainproject.adapters.ProfilePicturesAdapter
 import com.example.newmainproject.databinding.FragmentProfileBinding
 import com.example.newmainproject.models.User
 import com.example.newmainproject.ui.viewmodel.FirestoreDatabaseViewModel
+import com.example.newmainproject.ui.viewmodel.GoldScoreViewModel
 import com.example.newmainproject.ui.viewmodel.ImagesViewModel
 import com.example.newmainproject.ui.viewmodel.UserSingletonViewModel
 import com.example.newmainproject.utils.Constants
+import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.NonDisposableHandle.parent
@@ -32,6 +38,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile), ProfilePicturesAdap
     private lateinit var databaseViewModel:FirestoreDatabaseViewModel
     private var userSingletonViewModel: UserSingletonViewModel = UserSingletonViewModel()
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val goldScoreViewModel by viewModels<GoldScoreViewModel>()
     private var profilePicture: Int = 0
     private lateinit var user: User
 
@@ -44,6 +51,22 @@ class ProfileFragment : Fragment(R.layout.fragment_profile), ProfilePicturesAdap
         user = userSingletonViewModel.getUser()!!
         binding.profilePicture.setImageResource(user.image)
         binding.fullName.text = user.name.toString()
+        binding.goldProfil.text = goldScoreViewModel.getGoldScore().toString()
+        val chart: LineChart = binding.chart
+
+        val entries = listOf(
+            Entry(0f, 2f),
+            Entry(1f, 4f),
+            Entry(2f, 6f),
+            Entry(3f, 8f),
+            Entry(4f, 10f)
+        )
+
+        val dataSet = LineDataSet(entries, "Label")
+
+        chart.data = LineData(dataSet)
+        chart.invalidate()
+
 
         binding.logout.setOnClickListener {
             auth.signOut()
