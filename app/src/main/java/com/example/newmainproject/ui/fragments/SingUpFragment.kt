@@ -48,7 +48,7 @@ class SingUpFragment : Fragment(R.layout.fragment_sing_up) {
         var password:String = ""
 
 
-        binding.btnSignUp.setOnClickListener {
+        binding.btnSignUp2.setOnClickListener {
              email = binding.etEmailSingUp.text.toString()
              password = binding.etPasswordSingUp.text.toString()
             val name = binding.etNameSingUp.text.toString()

@@ -60,7 +60,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
             } else {
                 Handler(Looper.getMainLooper()).postDelayed({
-                    navController.navigate(R.id.action_splashFragment_to_signInFragment)
+                   navController.navigate(R.id.action_splashFragment_to_signInFragment)
                 }, 3000)
             }
         }

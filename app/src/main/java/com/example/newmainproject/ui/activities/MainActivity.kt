@@ -10,7 +10,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.newmainproject.R
 import com.example.newmainproject.databinding.ActivityMainBinding
-
+import androidx.navigation.ui.NavigationUI
 import com.example.newmainproject.ui.viewmodel.AuthViewModel
 import com.example.newmainproject.utils.DataTransferListener
 import com.google.android.material.bottomnavigation.BottomNavigationView

@@ -36,7 +36,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentSignInBinding.bind(view)
         createAccount = binding.tvCreateSingin
-        signInButton = binding.btnSignIn
+        signInButton = binding.btnSignIn2
 
 
         authViewModel = AuthViewModel()
@@ -48,12 +48,12 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
                 authViewModel.storeUserId()
                 val navController = Navigation.findNavController(requireView())
                 navController.navigate(R.id.action_signInFragment_to_homeFragment)
-                showToast("Login Success!")
+               // showToast("Login Success!")
                 val showBottomNavigation = true
                 dataTransferListener.onDataTransfer(showBottomNavigation)
 
             } else {
-                showToast("Login Failed!")
+               // showToast("Login Failed!")
             }
         }
 
