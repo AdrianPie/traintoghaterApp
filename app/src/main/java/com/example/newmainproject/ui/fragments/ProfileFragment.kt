@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +20,7 @@ import com.example.newmainproject.models.User
 import com.example.newmainproject.ui.viewmodel.FirestoreDatabaseViewModel
 import com.example.newmainproject.ui.viewmodel.GoldScoreViewModel
 import com.example.newmainproject.ui.viewmodel.ImagesViewModel
+import com.example.newmainproject.ui.viewmodel.PremiumProfileViewModel
 import com.example.newmainproject.ui.viewmodel.UserSingletonViewModel
 import com.example.newmainproject.utils.Constants
 import com.github.mikephil.charting.charts.LineChart
@@ -39,8 +41,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile), ProfilePicturesAdap
     private var userSingletonViewModel: UserSingletonViewModel = UserSingletonViewModel()
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val goldScoreViewModel by viewModels<GoldScoreViewModel>()
+    private val premiumProfileViewModel by viewModels<PremiumProfileViewModel>()
     private var profilePicture: Int = 0
     private lateinit var user: User
+    private lateinit var profileImages: ArrayList<Int>
 
 
 
@@ -52,13 +56,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile), ProfilePicturesAdap
         binding.profilePicture.setImageResource(user.image)
         binding.fullName.text = user.name.toString()
         binding.goldProfil.text = goldScoreViewModel.getGoldScore().toString()
-        val chart: LineChart = binding.chart
 
+
+        val chart: LineChart = binding.chart
         val entries = listOf(
             Entry(0f, 2f),
-            Entry(1f, 4f),
-            Entry(2f, 6f),
-            Entry(3f, 8f),
             Entry(4f, 10f)
         )
 
@@ -70,6 +72,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile), ProfilePicturesAdap
 
         binding.logout.setOnClickListener {
             auth.signOut()
+        }
+        binding.enterShop.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.action_profilFragment2_to_shopFragment)
         }
 
         databaseViewModel = FirestoreDatabaseViewModel()
@@ -95,8 +100,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile), ProfilePicturesAdap
         val dialog = layoutInflater.inflate(R.layout.bottom_sheet_profile, null)
         dialogView.setContentView(dialog)
 
+
         recyclerView = dialogView.findViewById(R.id.rc_profile_select)!!
-        profileAdapter = ProfilePicturesAdapter(imagesViewModel.returnAllProfileImages(),this)
+        profileAdapter = ProfilePicturesAdapter(getProfilePictures(),this)
         recyclerView.adapter = profileAdapter
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -105,12 +111,25 @@ class ProfileFragment : Fragment(R.layout.fragment_profile), ProfilePicturesAdap
 
     //Change profile picture in firestore and ui
     override fun onItemClick(position: Int) {
-        val picture = imagesViewModel.returnAllProfileImages()[position]
+        val picture = getProfilePictures()[position]
         binding.profilePicture.setImageResource(picture)
         databaseViewModel.updateUserInfo(picture)
 
         user.image = picture
         userSingletonViewModel.updateUser(user)
+    }
+    private fun getProfilePictures(): ArrayList<Int> {
+        val images = imagesViewModel.returnAllProfileImages()
+        var int = 0
+        for (i in imagesViewModel.returnAllPremiumProfileImages()) {
+            Log.d("sprawdzam", "getProfilePictures: $i")
+                if (premiumProfileViewModel.getBooleanValue("boolean_key_$int", false)){
+                    images += i
+                    Log.d("sprawdzam", "getProfilePictures: $int")
+                }
+            int++
+        }
+        return images
     }
 
 

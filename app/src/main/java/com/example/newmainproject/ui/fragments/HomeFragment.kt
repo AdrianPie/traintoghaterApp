@@ -42,6 +42,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private lateinit var adapterx: GroupMembersHomeAdapter
     private lateinit var timer: TimerHome
     private lateinit var navController: NavController
+    private var onlyOnce: Boolean = true
 
 
 
@@ -143,16 +144,18 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
              }
          }
          override fun onTimerFinish() {
-             navigate()
-             val group = groupSingletonViewModel.getGroup()
-             val user = userSingletonViewModel.getUser()
-             firestoreDatabaseViewModel.updateUserInfo(presence =  (user!!.presence + 1))
-             firestoreDatabaseViewModel.updateGroup(name = group!!.name, presence = (group.presence + 1))
+             if (onlyOnce) {
+                 val group = groupSingletonViewModel.getGroup()
+                 val user = userSingletonViewModel.getUser()
+                 firestoreDatabaseViewModel.updateUserInfo(presence =  (user!!.presence + 1))
+                 firestoreDatabaseViewModel.updateGroup(name = group!!.name, presence = (group.presence + 1))
+                 navController.navigate(R.id.action_homeFragment_to_exerciseFragment)
+                 onlyOnce = false
+             }
+
          }
      })
  }
- private fun navigate() {
-     navController.navigate(R.id.action_homeFragment_to_exerciseFragment)
- }
+
 
 }

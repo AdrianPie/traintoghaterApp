@@ -12,4 +12,11 @@
     <color name="light_gray">#EBEAEA</color>
     <color name="default_color">#FFFFFF</color>
     <color name="selected_color">#9ADA50</color>
+    <color name="pressedColor">#04C52E</color>
+    <color name="focusedColor">#63050F</color>
+    <color name="defaultColor">#8F7C7A</color>
+    <color name="card_background_color">#E1E6FF</color>
+    <color name="text_primary_color">#0A0909</color>
+    <color name="text_secondary_color">#000000</color>
+    <color name="card_background_col">#F1EAE4</color>
 </resources>

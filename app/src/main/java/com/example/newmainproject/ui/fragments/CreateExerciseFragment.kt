@@ -33,6 +33,7 @@ class CreateExerciseFragment : Fragment(R.layout.fragment_create_exercise), Crea
     private lateinit var binding: FragmentCreateExerciseBinding
     private lateinit var exerciseList: ArrayList<Exercise>
     private var selectedExerciseIndex: Int = 0
+    private var cheat: Int = 0
     private lateinit var rvCreate: RecyclerView
     private lateinit var createExerciseAdapter: CreateExerciseAdapter
 
@@ -55,7 +56,21 @@ class CreateExerciseFragment : Fragment(R.layout.fragment_create_exercise), Crea
         rvCreate.setHasFixedSize(false)
 
         binding.buttonCreateWorkout.setOnClickListener {
-            val exercise = Exercise(0,"PUSH UP",0,0,0,R.drawable.firstexercise,0,R.raw.onehandpushup)
+            var gif = R.drawable.firstexercise
+            if (cheat == 0) {
+                 gif = R.drawable.firstexercise
+            }
+            if (cheat == 1) {
+                 gif = R.drawable.secondexercise
+            }
+            if (cheat == 2) {
+                 gif = R.drawable.thirdexercise
+            }
+            if (cheat == 3) {
+                gif = R.drawable.fourthexercise
+            }
+            cheat++
+            val exercise = Exercise(0,"PUSH UP",0,0,0,gif,0,R.raw.onehandpushup)
             exerciseList.add(exercise)
             createExerciseAdapter.notifyDataSetChanged()
         }

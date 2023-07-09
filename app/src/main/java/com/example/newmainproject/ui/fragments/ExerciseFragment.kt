@@ -72,6 +72,7 @@ class ExerciseFragment : Fragment(R.layout.fragment_exercise) {
     private fun startExercise(exerciseList: ArrayList<Exercise>) {
         val duration = exerciseList[i].duration
         val reps = exerciseList[i].quantity
+        Log.d("obrazek", "startExercise: ${exerciseList[i].gifUri}")
         Glide.with(this).load(exerciseList[i].gifUri).into(binding.ivExerciseMainGif)
         binding.tvExerciseNameMain.text = exerciseList[i].name
         binding.repsExerciseMainTv.text = "Reps: ${exerciseList[i].quantity}"
@@ -95,7 +96,6 @@ class ExerciseFragment : Fragment(R.layout.fragment_exercise) {
                 if (i<exerciseList.size) {
                     startExercise(exerciseList)
                 } else {
-                    Log.d("martynadziwka", "onViewCreated: testy")
                     navController.navigate(R.id.action_exerciseFragment_to_scoreFragment)
                 }
 
