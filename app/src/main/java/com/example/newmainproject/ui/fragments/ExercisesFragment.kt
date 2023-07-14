@@ -34,7 +34,7 @@ class ExercisesFragment : Fragment(R.layout.fragment_exercises) {
         val rv = binding.rvWorkoutList
          exerciseViewModel.getAllExercises().observe(viewLifecycleOwner) {
              list -> exerciseList = list
-                val fake: String = ""
+
                  val adapter = ShowExercisesAdapter(exerciseList)
                  rv.adapter = adapter
                  rv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
