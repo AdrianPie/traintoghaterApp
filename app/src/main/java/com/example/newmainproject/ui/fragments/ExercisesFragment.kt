@@ -34,6 +34,8 @@ class ExercisesFragment : Fragment(R.layout.fragment_exercises) {
         val rv = binding.rvWorkoutList
          exerciseViewModel.getAllExercises().observe(viewLifecycleOwner) {
              list -> exerciseList = list
+             val test = ""
+             val tes2t = ""
 
                  val adapter = ShowExercisesAdapter(exerciseList)
                  rv.adapter = adapter
