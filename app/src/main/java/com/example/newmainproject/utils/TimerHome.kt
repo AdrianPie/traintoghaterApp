@@ -33,6 +33,7 @@ class TimerHome(private val totalTime: Long, private val interval: Long) {
                 }
             }
             timer?.start()
+            val dupa: String = ""
             isTimerRunning = true
         }
     }
