@@ -122,7 +122,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile), ProfilePicturesAdap
         val images = imagesViewModel.returnAllProfileImages()
         var int = 0
         for (i in imagesViewModel.returnAllPremiumProfileImages()) {
-            Log.d("sprawdzam", "getProfilePictures: $i")
+            Log.d("sprawdzam  ", "getProfilePictures: $i")
                 if (premiumProfileViewModel.getBooleanValue("boolean_key_$int", false)){
                     images += i
                     Log.d("sprawdzam", "getProfilePictures: $int")
